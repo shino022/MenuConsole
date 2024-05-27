@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'contexts/AuthContext';
 
 // material-ui
 import List from '@mui/material/List';
@@ -18,9 +20,11 @@ import WalletOutlined from '@ant-design/icons/WalletOutlined';
 
 export default function ProfileTab() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const handleListItemClick = (index) => {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+  const handleListItemClick = (e, index, path) => {
     setSelectedIndex(index);
+    navigate(path);
   };
 
   return (
@@ -50,7 +54,7 @@ export default function ProfileTab() {
         </ListItemIcon>
         <ListItemText primary="Billing" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 2}>
+      <ListItemButton selected={selectedIndex === 2} onClick={logout}>
         <ListItemIcon>
           <LogoutOutlined />
         </ListItemIcon>
